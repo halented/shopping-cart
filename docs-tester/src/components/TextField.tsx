@@ -18,6 +18,7 @@ interface Props {
     oopsies?: number,
     // the function should receive an arg of type string, and it should return a string. you can also tell it to return any valid type, including void if it returns nothin.
     funky: (bob: string) => string,
+    handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void,
     // obj1 has one entry: f1 (whose key is a string)
     obj1?: {
         f1: string
@@ -28,9 +29,11 @@ interface Props {
 // next to the name of the component, we define its type using typescript. If you hover over the FC, it stands for functional component -- something that is handed to you by react, as it plays nice with TSX. Props are handed to the FC inside angle brackets.
 const TextField: React.FC<Props> = (props) => {
     // below, if we simply set the default state to 5, typescript would assume that the type of count is a number. however, it would throw an error if you EVER set count to ANYTHING else. so, if you also want the count to be occasionally null, you can define those types with the angle brakcets using the or pipe. undefined is a different type from null, so if you want that too, you just have to add another pipe and put undef in there.
+    // eslint-disable-next-line
     const [count, setCount] = useState<number | null>(5)
 
     // you can also do a situation similar to props.
+    // eslint-disable-next-line
     const [info, setInfo] = useState<{ age: number, zildjian: boolean }>({ age: 15, zildjian: false })
 
     // once again, you can use an interface for this instead of entering it inline
@@ -39,6 +42,7 @@ const TextField: React.FC<Props> = (props) => {
         zildjian: boolean
     }
     const orlando: Kid = { age: 109, zildjian: true }
+    // eslint-disable-next-line
     const [kid, setKid] = useState<Kid>(orlando)
 
 
@@ -53,7 +57,8 @@ const TextField: React.FC<Props> = (props) => {
     return (
         <div ref={divRef}>
             <div>{props.text}</div>
-            <input ref={inputRef} />
+            {/* if your function comes from props, it has to be a super specific type of event, defined in the props interface above. hover over onChange to see the type. */}
+            <input ref={inputRef} onChange={props.handleChange} />
         </div>
     )
 }
