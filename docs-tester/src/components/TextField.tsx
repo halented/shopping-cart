@@ -42,12 +42,18 @@ const TextField: React.FC<Props> = (props) => {
     const [kid, setKid] = useState<Kid>(orlando)
 
 
+    // usually, you would be able to set inputRef like this, without any errors:
     // const inputRef = useRef()
+    // but because the types won't initially match, you have to tell typescript what to expect for the ref in order to work.
+    const inputRef = useRef<HTMLInputElement>(null)
+
+    // I am getting this type, HTMLDivElement, from hovering over the ref prop on the div below. because VS Code uses typescript under the hood, it has tool tips built in to let you know what the "type" of each thingy should be.
+    const divRef = useRef<HTMLDivElement>(null)
 
     return (
-        <div>
+        <div ref={divRef}>
             <div>{props.text}</div>
-            {/* <input ref={inputRef}/> */}
+            <input ref={inputRef} />
         </div>
     )
 }
