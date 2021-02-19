@@ -2,8 +2,10 @@ import './App.css';
 import TextField from './components/TextField';
 import { useReducer, useRef } from 'react'
 
-// works the same way it does in redux: accepts a value & and action
-const reducer = (state: number, action: { type: string }) => {
+// if i put this type here and hand it to the reducer, we get autocomplete when creating the onClicks
+type Actions = { type: "INCREMENT" } | { type: "DECREMENT" }
+// works the same way it does in redux: accepts state & and action
+const reducer = (state: number, action: Actions) => {
   console.log(action)
   switch (action.type) {
     case "INCREMENT":
@@ -11,7 +13,7 @@ const reducer = (state: number, action: { type: string }) => {
     case "DECREMENT":
       return state - 1
     default:
-      throw new Error(`Unhandled type: ${action.type}`)
+      throw new Error(`Unhandled type: ${action}`)
   }
 }
 
