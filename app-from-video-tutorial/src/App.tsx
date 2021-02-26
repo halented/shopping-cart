@@ -19,13 +19,18 @@ export type CartItemType = {
   amount: number;
 }
 
-
-const getProduces = async (): Promise<CartItemType> => {
-  await (await fetch('http:s//fakestoreapi.com/products')).json()
+// promise is called a "generate" in typescript
+const getProducts = async (): Promise<CartItemType[]> => {
+  return await (await fetch('https://fakestoreapi.com/products')).json()
 }
 
 
 const App = () => {
+  const { data, isLoading, error } = useQuery<CartItemType[]>(
+    'products',
+    getProducts
+  )
+  console.log(data)
   return (
     <div className="App">
       heybag
